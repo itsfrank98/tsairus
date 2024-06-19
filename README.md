@@ -35,7 +35,8 @@ dataset
         |__ spatial_network.dat
 ```
 Each snap will contain information related to that snap, but it's important that the files containing content and the 
-networks have the same name in the snaps.
+networks have the same name in the snaps. The ```dataset/example``` directory contains a simple example dataset with
+three splits. Its only purpose is to show an example of how the dataset should be structured
 
 ### Content file structure
 The csv containing the content must have three columns:
