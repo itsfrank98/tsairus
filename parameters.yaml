@@ -1,0 +1,17 @@
+params:
+  dir: "dataset/temporal-sentiment-5/temporal-splits"     # Directory containing the dataset
+  df_name: "dataframe_origids.csv"       # Name of the csv files where the textual content is stored
+  epochs_rel: 25                         # Epochs for learning the social node2vec node embedding model
+  epochs_spat: 25                        # Epochs for learning the spatial node2vec node embedding model
+  field_id: "id"                         # Name of the column storing the user ID in the csv
+  field_text: "text_cleaned"             # Name of the column storing the text in the csv
+  field_label: "label"                   # Name of the column storing the label in the csv
+  w2v_path: "models/google_w2v.bin"      # Path to the word embedding model
+  smooth: True                           # Whether to apply graph smoothing
+  mlp_batch_size: 64                     # Batch size of the MLP that will make the final prediction for each snap
+  mlp_lr: 0.04                           # learning rate of the MLP that will make the final prediction for each snap
+  ne_dim_rel: 128                        # Dimension of the relational node embeddings
+  ne_dim_spat: 128                       # Dimension of the spatial node embeddings
+  word_emb_size: 300                     # Dimension of the word embeddings
+  social_net_name: "original_ids_social_network.dat"    # Name of the file containing the social network adjacency list
+  spatial_net_name: "original_ids_spatial_network.dat"  # Name of the file containing the spatial network adjacency list
