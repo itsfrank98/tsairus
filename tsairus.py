@@ -82,7 +82,7 @@ def main_train(content_df, epochs_rel, epochs_spat, field_id, field_text, field_
         nz = len(df[df[field_label] == 1])
         pos_weight = len(df) / nz
         neg_weight = len(df) / (2 * (len(df) - nz))
-        #pos_weight = neg_weight = 1.0
+        pos_weight = neg_weight = 1.0
         train(train_df=df, model_dir=models_dir, field_id=field_id, path_rel=path_rel, path_spat=path_spat,
               word_emb_size=word_emb_size, emb_dim_spat=ne_dim_spat, emb_dim_rel=ne_dim_rel, eps_embs_spat=epochs_spat,
               eps_embs_rel=epochs_rel, users_emb_dict=users_embs_dict, prev_n2v_rel=prev_n2v_rel,

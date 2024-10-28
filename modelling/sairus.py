@@ -113,7 +113,7 @@ def predict_relational_part(df, tree, field_label, n2v=None, cmi=0.5, pmi=None, 
             for mod in prev_models:
                 if str(id) in mod.key_to_index:
                     forest_input = forest_input + mod[str(id)]
-                # forest_input = forest_input / len(prev_models)
+                forest_input = forest_input / len(prev_models)
             pr, conf = test_random_forest(test_set=forest_input, cls=tree)
         except KeyError:
             if not pmi:
@@ -125,7 +125,7 @@ def predict_relational_part(df, tree, field_label, n2v=None, cmi=0.5, pmi=None, 
 
 
 def train(emb_dim_rel, emb_dim_spat, field_id, field_label, model_dir, train_df, word_emb_size, users_emb_dict,
-          eps_embs_rel=None, eps_embs_spat=None, mlp_batch_size=128, mlp_epochs=50, mlp_lr=0.0003, path_rel=None,
+          eps_embs_rel, eps_embs_spat, mlp_batch_size=128, mlp_epochs=50, mlp_lr=0.0003, path_rel=None,
           path_spat=None, prev_n2v_rel=[], prev_n2v_spat=[], weights=None):
     """
     Builds and trains the independent modules that analyze content, social relationships and spatial relationships, and
@@ -245,7 +245,7 @@ def test(ae_dang, ae_safe, df, df_train, field_id, field_text, field_label, fore
          n2v_spat, w2v_model):
     tok = TextPreprocessing()
     posts = tok.token_dict(df, field_text=field_text, field_id=field_id)
-    test_set = torch.zeros(len(posts), 7)
+
     if type(w2v_model) == WordEmb:
         posts_embs_dict = w2v_model.text_to_vec(posts)
     else:
@@ -253,6 +253,7 @@ def test(ae_dang, ae_safe, df, df_train, field_id, field_text, field_label, fore
         token_dict = tok.token_dict(df=df, field_text=field_text, field_id=field_id)
         posts_embs_dict = keyedvectors_to_vec(w2v_model, token_dict)
     posts_embs = torch.tensor(list(posts_embs_dict.values()), dtype=torch.float32)
+    test_set = torch.zeros(len(posts_embs), 7)
     pl_dang, pl_safe, labels = predict_textual_part(posts_embs, ae_dang, ae_safe)
     test_set[:, 0] = pl_dang
     test_set[:, 1] = pl_safe
